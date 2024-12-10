@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Band Registration</title>
+    <link rel="stylesheet" href="css/registration.css">
+</head>
+<body>
+<div class="registration-container">
+    <!-- Progress Bar -->
+    <div class="progress-steps">
+        <div class="step active" id="step1">1. Upload Music</div>
+        <div class="step" id="step2">2. AI Analysis</div>
+        <div class="step" id="step3">3. Complete Profile</div>
+    </div>
+
+    <!-- Step 1: Music Upload -->
+    <div class="step-content" id="step1-content">
+        <h1>Upload Your Music</h1>
+        <p class="subtitle">Our AI will analyze your music to help create your profile</p>
+
+        <div class="upload-section">
+            <div class="upload-box" id="uploadBox">
+                <div class="upload-icon">↑</div>
+                <p>Drag and drop your music files here</p>
+                <p class="small">or</p>
+                <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                    Browse Files
+                </button>
+                <input type="file" hidden id="fileInput" multiple accept=".mp3,.wav">
+                <p class="file-types">Supported formats: MP3, WAV (Max 5 files)</p>
+            </div>
+
+            <div class="uploaded-files" id="uploadedFiles" style="display: none;">
+                <h3>Uploaded Files:</h3>
+                <ul id="fileList"></ul>
+            </div>
+        </div>
+
+        <div class="form-navigation">
+            <button class="next-btn" onclick="nextStep(1)" disabled id="nextBtn">Next</button>
+        </div>
+    </div>
+
+    <!-- Step 2: AI Analysis -->
+    <div class="step-content hidden" id="step2-content">
+        <h1>AI Analyzing Your Music</h1>
+        <p class="subtitle">Please wait while we analyze your music style</p>
+
+        <div class="analysis-progress">
+            <div class="progress-bar">
+                <div class="progress" id="analysisProgress"></div>
+            </div>
+            <p id="analysisStatus">Analyzing musical style and genre...</p>
+        </div>
+
+        <div class="form-navigation">
+            <button class="back-btn" onclick="prevStep(2)">Back</button>
+            <button class="next-btn" onclick="nextStep(2)" disabled id="analysisNextBtn">Next</button>
+        </div>
+    </div>
+
+
+    <!-- Step 3: Complete Profile -->
+    <div class="step-content hidden" id="step3-content">
+        <h1 class="analysis-title">AI Music Analysis Results</h1>
+
+        <!-- AI Analysis Results -->
+        <div class="analysis-section">
+            <h2>Detected Genre</h2>
+            <div class="result-box">
+                <span>Jazz</span>
+                <div class="confidence-badge">✓</div>
+            </div>
+            <p class="confidence-text">High confidence match based on harmony and rhythm analysis</p>
+
+            <h2>Jazz Styles Detected</h2>
+            <div class="tags-container">
+                <span class="tag">Contemporary Jazz</span>
+                <span class="tag">Bebop</span>
+                <span class="tag">Fusion</span>
+                <button class="tag tag-add">+ Add Style</button>
+            </div>
+
+            <h2>Instruments Detected</h2>
+            <div class="tags-container">
+                <span class="tag">Piano</span>
+                <span class="tag">Trumpet</span>
+                <span class="tag">Double Bass</span>
+                <span class="tag">Drums</span>
+                <span class="tag">Saxophone</span>
+                <button class="tag tag-add">+ Add Instrument</button>
+            </div>
+
+            <h2>Suggested Bio</h2>
+            <div class="bio-box">
+                <p>A sophisticated jazz ensemble that seamlessly blends traditional bebop foundations with contemporary harmonies. The group showcases impressive improvisational skills through intricate solos and dynamic interplay between instruments, creating an immersive jazz experience that pays homage to the classics while pushing musical boundaries.</p>
+            </div>
+
+            <h2>Similar Artists</h2>
+            <div class="tags-container">
+                <span class="tag">Miles Davis</span>
+                <span class="tag">John Coltrane</span>
+                <span class="tag">Herbie Hancock</span>
+            </div>
+
+            <h2>Recommended Venues</h2>
+            <div class="tags-container">
+                <span class="tag">Jazz Clubs</span>
+                <span class="tag">Upscale Events</span>
+                <span class="tag">Music Festivals</span>
+                <span class="tag">Corporate Functions</span>
+            </div>
+        </div>
+
+        <!-- Profile Form -->
+        <div class="profile-section">
+            <h1>Complete Your Profile</h1>
+
+            <div class="form-group">
+                <label>Ensemble Name</label>
+                <input type="text" placeholder="Your ensemble name" class="dark-input">
+            </div>
+
+            <div class="form-group">
+                <label>Location</label>
+                <input type="text" placeholder="City, Country" class="dark-input">
+            </div>
+
+            <div class="form-group">
+                <label>Performance Rate</label>
+                <input type="text" placeholder="e.g., $800 - $1500 per event" class="dark-input">
+                <p class="hint-text">Suggested range based on your style and location</p>
+            </div>
+
+            <div class="form-group">
+                <label>Typical Set Duration</label>
+                <input type="text" placeholder="e.g., 2 x 45 minute sets" class="dark-input">
+            </div>
+
+            <div class="form-navigation">
+                <button class="back-btn">Back to Upload</button>
+                <button class="create-btn" onclick="createProfile()">Create Profile</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let uploadedFiles = [];
+
+    // File upload handling
+    const uploadBox = document.getElementById('uploadBox');
+    const fileInput = document.getElementById('fileInput');
+    const nextBtn = document.getElementById('nextBtn');
+
+    uploadBox.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadBox.classList.add('dragover');
+    });
+
+    uploadBox.addEventListener('dragleave', () => {
+        uploadBox.classList.remove('dragover');
+    });
+
+    uploadBox.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadBox.classList.remove('dragover');
+        handleFiles(e.dataTransfer.files);
+    });
+
+    fileInput.addEventListener('change', (e) => {
+        handleFiles(e.target.files);
+    });
+
+    function handleFiles(files) {
+        if (files.length > 5) {
+            alert('Maximum 5 files allowed');
+            return;
+        }
+
+        uploadedFiles = Array.from(files);
+        showUploadedFiles();
+        nextBtn.disabled = false;
+    }
+
+    function showUploadedFiles() {
+        const fileList = document.getElementById('fileList');
+        fileList.innerHTML = '';
+
+        uploadedFiles.forEach(file => {
+            const li = document.createElement('li');
+            li.textContent = file.name;
+            fileList.appendChild(li);
+        });
+
+        document.getElementById('uploadedFiles').style.display = 'block';
+    }
+
+    function nextStep(currentStep) {
+        document.getElementById(`step${currentStep}-content`).classList.add('hidden');
+        document.getElementById(`step${currentStep + 1}-content`).classList.remove('hidden');
+
+        document.getElementById(`step${currentStep}`).classList.remove('active');
+        document.getElementById(`step${currentStep + 1}`).classList.add('active');
+
+        if (currentStep === 1) {
+            startAnalysis();
+        }
+    }
+
+    function prevStep(currentStep) {
+        document.getElementById(`step${currentStep}-content`).classList.add('hidden');
+        document.getElementById(`step${currentStep - 1}-content`).classList.remove('hidden');
+
+        document.getElementById(`step${currentStep}`).classList.remove('active');
+        document.getElementById(`step${currentStep - 1}`).classList.add('active');
+    }
+
+    function startAnalysis() {
+        const progressBar = document.getElementById('analysisProgress');
+        const statusText = document.getElementById('analysisStatus');
+        const analysisNextBtn = document.getElementById('analysisNextBtn');
+        let progress = 0;
+
+        const interval = setInterval(() => {
+            progress += 2;
+            progressBar.style.width = `${progress}%`;
+
+            if (progress >= 100) {
+                clearInterval(interval);
+                statusText.textContent = 'Analysis Complete!';
+                analysisNextBtn.disabled = false;
+                showAISuggestions();
+            }
+        }, 100);
+    }
+
+    function showAISuggestions() {
+        const suggestions = {
+            genre: 'Funk/Alternative',
+            subGenres: ['Acid Jazz', 'Funk'],
+            similarArtists: ['Jamiroquai', 'Incognito', 'Makoto Matsushita'],
+            suggestedBio: 'A dynamic funk band blending alternative and indie influences...'
+        };
+
+        const aiSuggestions = document.getElementById('aiSuggestions');
+        aiSuggestions.innerHTML = `
+                <div class="suggestion-item">
+                    <label>Detected Genre</label>
+                    <p>${suggestions.genre}</p>
+                </div>
+                <div class="suggestion-item">
+                    <label>Sub-Genres</label>
+                    <p>${suggestions.subGenres.join(', ')}</p>
+                </div>
+                <div class="suggestion-item">
+                    <label>Similar Artists</label>
+                    <p>${suggestions.similarArtists.join(', ')}</p>
+                </div>
+                <div class="suggestion-item">
+                    <label>Suggested Bio</label>
+                    <p>${suggestions.suggestedBio}</p>
+                </div>
+            `;
+    }
+    function createProfile() {
+        //  submission logic to be added
+        alert('Profile created successfully!');
+
+        // Navigate back to the main menu
+        window.location.href = 'index.html';
+    }
+
+    // Form submission
+    document.getElementById('profileForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        // Add your form submission logic here
+        alert('Profile created successfully!');
+    });
+</script>
+</body>
+</html>
