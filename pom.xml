@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.bandbooking</groupId>
-    <artifactId>band-booking</artifactId>
+    <artifactId>io</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>band-booking</name>
     <description>band-booking</description>
