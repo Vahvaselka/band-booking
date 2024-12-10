@@ -1,0 +1,60 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #2a3980;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    text-align: center;
+    padding: 20px;
+    background-color: #1e2d69;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #ffffff;
+}
+
+.options {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    width: 200px;
+    padding: 20px;
+    margin: 0 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.option i {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.band {
+    background-color: #4c5fb1;
+}
+
+.customer {
+    background-color: #2a3980;
+}
+
+.option:hover {
+    background-color: #6d7fcc;
+}
+
+.customer:hover {
+    background-color: #3b4a9a;
+}

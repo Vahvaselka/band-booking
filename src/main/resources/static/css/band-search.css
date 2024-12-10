@@ -1,0 +1,119 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1c2657;
+    color: white;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.search-box {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.search-box input, .search-box select, .search-box button {
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+}
+
+.search-box select, .search-box input {
+    flex: 1;
+    max-width: 150px;
+}
+
+.search-box button {
+    background-color: #437efc;
+    color: white;
+    cursor: pointer;
+    max-width: 200px;
+}
+
+.results {
+    text-align: left;
+}
+
+h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.band-card {
+    display: flex;
+    background-color: #2d3c77;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.band-image {
+    width: 120px;
+    height: 90px;
+    background-color: #ccc;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.band-info {
+    flex: 1;
+}
+
+.band-info h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.band-info p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.tags {
+    margin-top: 10px;
+}
+
+.tags span {
+    background-color: #5569c8;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-right: 5px;
+    font-size: 12px;
+}
+
+.instruments {
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.rating {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.details-button {
+    background-color: #437efc;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 14px;
+}
