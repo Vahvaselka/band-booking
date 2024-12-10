@@ -1,109 +1,201 @@
-let uploadedFiles = [];
 
-// File upload handling
-document.getElementById('uploadBox').addEventListener('dragover', (e) => {
-    e.preventDefault();
-    e.currentTarget.classList.add('dragover');
+document.addEventListener('DOMContentLoaded', () => {
+    initializeFormHandlers();
+    hideAllStepsExceptFirst();
 });
 
-document.getElementById('uploadBox').addEventListener('dragleave', (e) => {
-    e.currentTarget.classList.remove('dragover');
-});
-
-document.getElementById('uploadBox').addEventListener('drop', (e) => {
-    e.preventDefault();
-    handleFiles(e.dataTransfer.files);
-});
-
-document.getElementById('fileInput').addEventListener('change', (e) => {
-    handleFiles(e.target.files);
-});
-
-function handleFiles(files) {
-    uploadedFiles = Array.from(files);
-    showUploadedFiles();
+function hideAllStepsExceptFirst() {
+    // Hide all steps except the first one
+    const steps = document.querySelectorAll('.step-content');
+    steps.forEach((step, index) => {
+        if (index === 0) {
+            step.classList.remove('hidden');
+        } else {
+            step.classList.add('hidden');
+        }
+    });
 }
 
-function showUploadedFiles() {
+function initializeFormHandlers() {
+    // Upload box handlers
+    const uploadBox = document.getElementById('uploadBox');
+    const fileInput = document.getElementById('fileInput');
+    const browseButton = document.getElementById('browseButton');
+
+    uploadBox.addEventListener('dragover', handleDragOver);
+    uploadBox.addEventListener('dragleave', handleDragLeave);
+    uploadBox.addEventListener('drop', handleDrop);
+    fileInput.addEventListener('change', handleFileSelect);
+    browseButton.addEventListener('click', () => fileInput.click());
+
+    // Navigation buttons
+    document.getElementById('proceedToAnalysisBtn').addEventListener('click', () => {
+        hideStep(1);
+        showStep(2);
+        startAnalysis();
+    });
+
+    document.getElementById('backToUploadBtn').addEventListener('click', () => {
+        hideStep(2);
+        showStep(1);
+    });
+
+    document.getElementById('analysisDoneBtn').addEventListener('click', () => {
+        hideStep(2);
+        showStep(3);
+    });
+
+    document.getElementById('backToAnalysisBtn').addEventListener('click', () => {
+        hideStep(3);
+        showStep(2);
+    });
+
+    document.getElementById('submitProfileBtn').addEventListener('click', handleProfileSubmission);
+}
+
+function hideStep(stepNumber) {
+    document.getElementById(`step${stepNumber}-content`).classList.add('hidden');
+    document.getElementById(`step${stepNumber}`).classList.remove('active');
+}
+
+function showStep(stepNumber) {
+    document.getElementById(`step${stepNumber}-content`).classList.remove('hidden');
+    document.getElementById(`step${stepNumber}`).classList.add('active');
+    updateProgress(stepNumber);
+}
+
+function handleDragOver(e) {
+    e.preventDefault();
+    e.currentTarget.classList.add('dragover');
+}
+
+function handleDragLeave(e) {
+    e.currentTarget.classList.remove('dragover');
+}
+
+function handleDrop(e) {
+    e.preventDefault();
+    e.currentTarget.classList.remove('dragover');
+    handleFiles(e.dataTransfer.files);
+}
+
+function handleFileSelect(e) {
+    handleFiles(e.target.files);
+}
+
+function handleFiles(files) {
+    if (files.length > 5) {
+        showError('Maximum 5 files allowed');
+        return;
+    }
+
+    if (!validateFiles(files)) {
+        return;
+    }
+
     const fileList = document.getElementById('fileList');
     fileList.innerHTML = '';
 
-    uploadedFiles.forEach(file => {
+    Array.from(files).forEach(file => {
         const li = document.createElement('li');
         li.textContent = file.name;
         fileList.appendChild(li);
     });
 
     document.getElementById('uploadedFiles').style.display = 'block';
+    document.getElementById('proceedToAnalysisBtn').disabled = false;
 }
 
 function startAnalysis() {
-    // Hide step 1 content and show step 2
-    document.getElementById('step1-content').classList.add('hidden');
-    document.getElementById('step2-content').classList.remove('hidden');
-
-    // Update progress steps
-    document.getElementById('step1').classList.remove('active');
-    document.getElementById('step2').classList.add('active');
-
-    // Simulate analysis progress
-    simulateAnalysis();
-}
-
-function simulateAnalysis() {
-    let progress = 0;
     const progressBar = document.getElementById('analysisProgress');
-    const status = document.getElementById('analysisStatus');
+    const statusText = document.getElementById('analysisStatus');
+    const nextButton = document.getElementById('analysisDoneBtn');
+    let progress = 0;
+
+    nextButton.disabled = true;
+    progressBar.style.width = '0%';
 
     const interval = setInterval(() => {
-        progress += 5;
+        progress += 2;
         progressBar.style.width = `${progress}%`;
 
-        if (progress === 100) {
+        updateAnalysisStatus(getAnalysisStatusText(progress));
+
+        if (progress >= 100) {
             clearInterval(interval);
-            showAnalysisResults();
+            statusText.textContent = 'Analysis Complete!';
+            nextButton.disabled = false;
         }
-    }, 200);
+    }, 100);
 }
 
-function showAnalysisResults() {
-    // Show results and move to step 3
-    setTimeout(() => {
-        document.getElementById('step2-content').classList.add('hidden');
-        document.getElementById('step3-content').classList.remove('hidden');
-        document.getElementById('step2').classList.remove('active');
-        document.getElementById('step3').classList.add('active');
-
-        // Populate AI suggestions
-        showAISuggestions();
-    }, 1000);
+function getAnalysisStatusText(progress) {
+    if (progress < 25) return 'Analyzing musical style and genre...';
+    if (progress < 50) return 'Detecting instruments and arrangements...';
+    if (progress < 75) return 'Identifying similar artists...';
+    if (progress < 90) return 'Generating venue recommendations...';
+    return 'Finalizing analysis...';
 }
 
-function showAISuggestions() {
-    const suggestions = {
-        genre: 'Rock/Alternative',
-        subGenres: ['Indie Rock', 'Alternative Metal'],
-        similarArtists: ['Band A', 'Band B', 'Band C'],
-        suggestedBio: 'A dynamic rock band blending alternative and indie influences...'
+function updateAnalysisStatus(status) {
+    const statusElement = document.getElementById('analysisStatus');
+    statusElement.textContent = status;
+}
+
+function validateFiles(files) {
+    const validTypes = ['audio/mpeg', 'audio/wav'];
+    const maxSize = 20 * 1024 * 1024; // 20MB
+
+    for (let file of files) {
+        if (!validTypes.includes(file.type)) {
+            showError(`Invalid file type: ${file.name}. Please upload only MP3 or WAV files.`);
+            return false;
+        }
+        if (file.size > maxSize) {
+            showError(`File too large: ${file.name}. Maximum size is 20MB.`);
+            return false;
+        }
+    }
+    return true;
+}
+
+function updateProgress(step) {
+    const steps = document.querySelectorAll('.step');
+    steps.forEach((stepElement, index) => {
+        if (index < step) {
+            stepElement.classList.add('completed');
+        } else {
+            stepElement.classList.remove('completed');
+        }
+    });
+}
+
+function handleProfileSubmission() {
+    const profileData = {
+        ensembleName: document.getElementById('ensembleName').value,
+        location: document.getElementById('location').value,
+        rate: document.getElementById('rate').value,
+        duration: document.getElementById('duration').value
     };
 
-    const aiSuggestions = document.getElementById('aiSuggestions');
-    aiSuggestions.innerHTML = `
-        <div class="suggestion-item">
-            <label>Detected Genre</label>
-            <p>${suggestions.genre}</p>
-        </div>
-        <div class="suggestion-item">
-            <label>Sub-Genres</label>
-            <p>${suggestions.subGenres.join(', ')}</p>
-        </div>
-        <div class="suggestion-item">
-            <label>Similar Artists</label>
-            <p>${suggestions.similarArtists.join(', ')}</p>
-        </div>
-        <div class="suggestion-item">
-            <label>Suggested Bio</label>
-            <p>${suggestions.suggestedBio}</p>
-        </div>
-    `;
+    if (!validateProfileData(profileData)) {
+        return;
+    }
+
+    // skicka data till server to do
+    alert('Profile created successfully!');
+    // Redirect to dashboard or home page
+    window.location.href = '../../../index.html';
+}
+
+function validateProfileData(data) {
+    if (!data.ensembleName || !data.location || !data.rate || !data.duration) {
+        showError('Please fill in all profile fields');
+        return false;
+    }
+    return true;
+}
+
+function showError(message) {
+    alert(message);
 }

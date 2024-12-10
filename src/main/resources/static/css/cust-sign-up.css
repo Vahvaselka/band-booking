@@ -1,0 +1,122 @@
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: #1a1f3c;
+    color: white;
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.form-card {
+    background-color: #232850;
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 30px;
+}
+
+h1 {
+    margin: 0 0 24px 0;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px;
+    background-color: #1a1f3c;
+    border: 1px solid #343b6b;
+    border-radius: 6px;
+    color: white;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: #4169e1;
+}
+
+.password-requirements {
+    margin-top: 8px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    accent-color: #4169e1;
+}
+
+.checkbox-group label {
+    margin: 0;
+    font-size: 14px;
+}
+
+.button {
+    background-color: #4169e1;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 12px;
+    width: 100%;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.button:hover {
+    background-color: #3557c5;
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.login-link a {
+    color: #4169e1;
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+.error-message {
+    color: #ff4d4d;
+    font-size: 14px;
+    margin-top: 4px;
+    display: none;
+}
+
+.input-field.error {
+    border-color: #ff4d4d;
+}
