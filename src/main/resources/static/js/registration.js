@@ -185,7 +185,7 @@ function handleProfileSubmission() {
     // skicka data till server to do
     alert('Profile created successfully!');
     // Redirect to dashboard or home page
-    window.location.href = '../../../index.html';
+    window.location.href = '/index.html';
 }
 
 function validateProfileData(data) {
