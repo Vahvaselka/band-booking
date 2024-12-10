@@ -185,7 +185,7 @@ function handleProfileSubmission() {
     // skicka data till server to do
     alert('Profile created successfully!');
     // Redirect to dashboard or home page
-    window.location.href = '/vahvaselka.github.io/index.html';
+    window.location.href = '/';
 }
 
 function validateProfileData(data) {
