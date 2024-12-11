@@ -14,9 +14,17 @@ function hideAllStepsExceptFirst() {
             step.classList.add('hidden');
         }
     });
+    updateProgress(1);
 }
 
 function initializeFormHandlers() {
+    const createProfileBtn = document.getElementById('createProfileBtn');
+    createProfileBtn.addEventListener('click', () => {
+        if (validateProfileCreation()) {
+            hideStep(1);
+            showStep(2);
+        }
+    });
     // Upload box handlers
     const uploadBox = document.getElementById('uploadBox');
     const fileInput = document.getElementById('fileInput');
@@ -30,24 +38,24 @@ function initializeFormHandlers() {
 
     // Navigation buttons
     document.getElementById('proceedToAnalysisBtn').addEventListener('click', () => {
-        hideStep(1);
-        showStep(2);
+        hideStep(2);
+        showStep(3);
         startAnalysis();
     });
 
     document.getElementById('backToUploadBtn').addEventListener('click', () => {
-        hideStep(2);
-        showStep(1);
+        hideStep(3);
+        showStep(2);
     });
 
     document.getElementById('analysisDoneBtn').addEventListener('click', () => {
-        hideStep(2);
-        showStep(3);
+        hideStep(3);
+        showStep(4);
     });
 
     document.getElementById('backToAnalysisBtn').addEventListener('click', () => {
-        hideStep(3);
-        showStep(2);
+        hideStep(4);
+        showStep(3);
     });
 
     document.getElementById('submitProfileBtn').addEventListener('click', handleProfileSubmission);
@@ -198,4 +206,47 @@ function validateProfileData(data) {
 
 function showError(message) {
     alert(message);
+}
+function validateProfileCreation() {
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
+    const terms = document.getElementById('terms').checked;
+
+    // Reset error messages
+    document.querySelectorAll('.error-message').forEach(error => {
+        error.style.display = 'none';
+    });
+
+    let isValid = true;
+
+    if (!name.trim()) {
+        document.querySelector('#name + .error-message').style.display = 'block';
+        isValid = false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
+        document.querySelector('#email + .error-message').style.display = 'block';
+        isValid = false;
+    }
+
+    const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
+    if (!password || !passwordRegex.test(password)) {
+        document.querySelector('#password + .password-requirements + .error-message').style.display = 'block';
+        isValid = false;
+    }
+
+    if (password !== confirmPassword) {
+        document.querySelector('#confirm-password + .error-message').style.display = 'block';
+        isValid = false;
+    }
+
+    if (!terms) {
+        alert('Please accept the Terms of Service and Privacy Policy');
+        isValid = false;
+    }
+
+    return isValid;
 }

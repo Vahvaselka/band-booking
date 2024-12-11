@@ -10,12 +10,61 @@
 <div class="registration-container">
     <!-- Progress Bar -->
     <div class="progress-steps">
-        <div class="step active" id="step1">1. Upload Music</div>
-        <div class="step" id="step2">2. AI Analysis</div>
-        <div class="step" id="step3">3. Complete Profile</div>
+        <div class="step" id="step1">1. Create Profile</div>
+        <div class="step active" id="step2">2. Upload Music</div>
+        <div class="step" id="step3">3. AI Analysis</div>
+        <div class="step" id="step4">4. Complete Profile</div>
     </div>
-    <!-- Step 1: Music Upload -->
+    <!-- Step 1: Create Profile -->
     <div class="step-content" id="step1-content">
+        <h1>Create Your Artist Profile</h1>
+
+        <form id="profile-form">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" class="input-field" required>
+                <div class="error-message">Please enter your full name</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" class="input-field" required>
+                <div class="error-message">Please enter a valid email address</div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="input-field" required>
+                <div class="password-requirements">
+                    Password must be at least 8 characters long and include a number and special character
+                </div>
+                <div class="error-message">Password doesn't meet requirements</div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" class="input-field" required>
+                <div class="error-message">Passwords don't match</div>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="terms" required>
+                <label for="terms">I agree to the Terms of Service and Privacy Policy</label>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="newsletter">
+                <label for="newsletter">Send me updates about events and special offers</label>
+            </div>
+
+            <div class="form-navigation">
+                <button type="button" class="next-btn" id="createProfileBtn">Next</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Step 2: Music Upload -->
+    <div class="step-content" id="step2-content">
         <h1>Upload Your Music</h1>
         <p class="subtitle">Our AI will analyze your music to help create your profile</p>
 
@@ -42,8 +91,8 @@
         </div>
     </div>
 
-    <!-- Step 2: AI Analysis -->
-    <div class="step-content hidden" id="step2-content">
+    <!-- Step 3: AI Analysis -->
+    <div class="step-content hidden" id="step3-content">
         <h1>AI Analyzing Your Music</h1>
         <p class="subtitle">Please wait while we analyze your music style</p>
 
@@ -60,8 +109,8 @@
         </div>
     </div>
 
-    <!-- Step 3: Complete Profile -->
-    <div class="step-content hidden" id="step3-content">
+    <!-- Step 4: Complete Profile -->
+    <div class="step-content hidden" id="step4-content">
         <h1 class="analysis-title">AI Music Analysis Results</h1>
 
             <!-- AI Analysis Results -->
