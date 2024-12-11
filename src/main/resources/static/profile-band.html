@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Band Dashboard - RhythmRoster</title>
+    <link rel="stylesheet" href="css/profile-band.css">
+</head>
+<body>
+<nav class="navbar">
+    <a href="#" class="logo">
+        <img src="images/logovit.png" alt="RhythmRoster Logo">
+        RhythmRoster
+    </a>
+
+    <div class="nav-links">
+        <a href="#" class="nav-link active" id="bookingsBtn">My Bookings</a>
+        <a href="#" class="nav-link" id="messagesBtn">Messages</a>
+        <a href="#" class="nav-link" id="settingsBtn">Settings</a>
+        <button class="logout-btn">Logout</button>
+    </div>
+</nav>
+
+<!-- Bookings Section -->
+<main>
+    <section id="bookingsSection" class="section">
+        <div class="section-header">
+            <h1>My Bookings</h1>
+            <div class="booking-filters">
+                <button class="filter-btn active">Upcoming</button>
+                <button class="filter-btn">Past</button>
+                <button class="filter-btn">Pending</button>
+            </div>
+        </div>
+
+        <div class="bookings-grid">
+            <!-- Booking cards will be populated by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Messages Section -->
+    <section id="messagesSection" class="section hidden">
+        <div class="messages-container">
+            <div class="conversations-list">
+                <!-- Conversation list will be populated by JavaScript -->
+            </div>
+            <div class="message-view">
+                <div class="message-header">
+                    <h2>Messages</h2>
+                </div>
+                <div class="messages-content">
+                    <!-- Messages will be populated by JavaScript -->
+                </div>
+                <div class="message-input">
+                    <input type="text" placeholder="Type a message...">
+                    <button class="send-btn">Send</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Settings Section -->
+    <section id="settingsSection" class="section hidden">
+        <h1>Band Settings</h1>
+        <div class="settings-grid">
+            <div class="settings-card">
+                <h2>Profile Information</h2>
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label>Band Name</label>
+                        <input type="text" value="The Rock Stars" id="bandName">
+                    </div>
+                    <div class="form-group">
+                        <label>Genre</label>
+                        <input type="text" value="Rock, Alternative" id="genre">
+                    </div>
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" value="New York, NY" id="location">
+                    </div>
+                    <div class="form-group">
+                        <label>Bio</label>
+                        <textarea id="bio">Professional rock band available for events.</textarea>
+                    </div>
+                    <button type="submit" class="save-btn">Save Changes</button>
+                </form>
+            </div>
+
+            <div class="settings-card">
+                <h2>Booking Preferences</h2>
+                <form id="bookingPrefs">
+                    <div class="form-group">
+                        <label>Price Range</label>
+                        <div class="price-inputs">
+                            <input type="number" value="1000" id="minPrice">
+                            <span>to</span>
+                            <input type="number" value="2500" id="maxPrice">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Available Days</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" checked> Monday</label>
+                            <label><input type="checkbox" checked> Tuesday</label>
+                            <label><input type="checkbox" checked> Wednesday</label>
+                            <label><input type="checkbox" checked> Thursday</label>
+                            <label><input type="checkbox" checked> Friday</label>
+                            <label><input type="checkbox" checked> Saturday</label>
+                            <label><input type="checkbox" checked> Sunday</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="save-btn">Save Preferences</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script src="js/band-profile.js"></script>
+</body>
+</html>
