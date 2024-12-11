@@ -8,7 +8,7 @@
 </head>
 <body>
 <nav class="navbar">
-    <a href="#" class="logo">
+    <a href="/" class="logo">
         <img src="images/logovit.png" alt="RhythmRoster Logo">
         RhythmRoster
     </a>
@@ -38,28 +38,42 @@
         </div>
     </section>
 
-    <!-- Messages Section -->
-    <section id="messagesSection" class="section hidden">
+    <section id="messagesSection" class="section">
         <div class="messages-container">
+            <!-- Empty conversations list - will be populated by JavaScript -->
             <div class="conversations-list">
-                <!-- Conversation list will be populated by JavaScript -->
             </div>
+
+            <!-- Empty message view - will be populated by JavaScript -->
             <div class="message-view">
                 <div class="message-header">
-                    <h2>Messages</h2>
+                    <div class="recipient-info">
+                        <div class="recipient-avatar"></div>
+                        <h2 class="recipient-name">Select a conversation</h2>
+                    </div>
                 </div>
                 <div class="messages-content">
-                    <!-- Messages will be populated by JavaScript -->
                 </div>
-                <div class="message-input">
-                    <input type="text" placeholder="Type a message...">
-                    <button class="send-btn">Send</button>
+                <div class="message-composer">
+                    <div class="input-wrapper">
+                        <button class="attachment-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 5v14M5 12h14"/>
+                            </svg>
+                        </button>
+                        <input type="text" placeholder="iMessage" disabled>
+                        <button class="emoji-btn">😊</button>
+                    </div>
+                    <button class="send-btn" disabled>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Settings Section -->
     <section id="settingsSection" class="section hidden">
         <h1>Band Settings</h1>
         <div class="settings-grid">
@@ -85,18 +99,23 @@
                     <button type="submit" class="save-btn">Save Changes</button>
                 </form>
             </div>
-
-            <div class="settings-card">
+            <div class="settings-card" >
                 <h2>Booking Preferences</h2>
                 <form id="bookingPrefs">
                     <div class="form-group">
-                        <label>Price Range</label>
-                        <div class="price-inputs">
-                            <input type="number" value="1000" id="minPrice">
-                            <span>to</span>
-                            <input type="number" value="2500" id="maxPrice">
+                        <label>Price Range ($)</label>
+                        <div class="price-range">
+                            <div class="price-input">
+                                <label>Min</label>
+                                <input type="number" value="1000" id="minPrice">
+                            </div>
+                            <div class="price-input">
+                                <label>Max</label>
+                                <input type="number" value="2500" id="maxPrice">
+                            </div>
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label>Available Days</label>
                         <div class="checkbox-group">
@@ -109,6 +128,8 @@
                             <label><input type="checkbox" checked> Sunday</label>
                         </div>
                     </div>
+
+
                     <button type="submit" class="save-btn">Save Preferences</button>
                 </form>
             </div>
