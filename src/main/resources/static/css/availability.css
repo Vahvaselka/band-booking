@@ -1,3 +1,4 @@
+
 :root {
     --primary-dark: #1a1a2e;
     --primary-light: #e6e6e6;
@@ -144,7 +145,7 @@ textarea {
     resize: vertical;
 }
 
-button[type="submit"] {
+button[type="submit"],button[type="button"] {
     background-color: var(--accent);
     color: white;
     padding: 1rem 2rem;
@@ -156,9 +157,13 @@ button[type="submit"] {
     width: 100%;
 }
 
-button[type="submit"]:hover {
+button[type="submit"],button[type="button"]:hover {
     background-color: #2851db;
 }
+button[type="submit"] {
+    margin-bottom: 1rem;  /* Adds space below the submit button */
+}
+
 
 .availability-note {
     text-align: center;
