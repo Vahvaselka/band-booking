@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Band or Customer</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="stylesheet" href="css/question.css">
 </head>
 <body>
+<div class="background"></div>
 <div class="container">
+  <div class="card">
   <h1>Are you a Band or a Customer?</h1>
-  <div class="options">
-    <a href="band-registration.html" class="option band">
-      <i class="fas fa-music"></i>
-      <span>I'm a Band</span>
+  <p class="subtitle">Choose your role to get started</p>
+  <div class="button-container">
+    <a href="band-registration.html" class="button">
+      <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+      </svg>
+      I'm a Band
     </a>
-    <a href="customer-page.html" class="option customer">
-      <i class="fas fa-user"></i>
-      <span>I'm a Customer</span>
+    <a href="cust-sign-up.html" class="button">
+      <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+      </svg>
+      I'm a Customer
     </a>
+  </div>
   </div>
 </div>
 </body>
