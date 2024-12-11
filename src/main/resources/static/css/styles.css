@@ -12,7 +12,7 @@ html {
 
 body {
     min-height: 100vh;
-    background: linear-gradient(to bottom, #1e3a8a, #000000);
+    background: linear-gradient(to bottom, #000000,#1e3a8a);
     color: white;
     font-family: system-ui, -apple-system, Arial, sans-serif;
 }
@@ -354,4 +354,10 @@ nav {
     .bands-grid {
         grid-template-columns: repeat(3, 1fr);
     }
+}
+.content-wrapper {
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(to bottom, #000000,#1e3a8a);
+    width: 100%;
 }
