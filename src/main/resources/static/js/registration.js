@@ -17,6 +17,7 @@ function hideAllStepsExceptFirst() {
     updateProgress(1);
 }
 
+
 function initializeFormHandlers() {
     const createProfileBtn = document.getElementById('createProfileBtn');
     createProfileBtn.addEventListener('click', () => {
@@ -56,6 +57,11 @@ function initializeFormHandlers() {
     document.getElementById('backToAnalysisBtn').addEventListener('click', () => {
         hideStep(4);
         showStep(3);
+    });
+
+    document.getElementById('backToProfileBtn').addEventListener('click', () => {
+        hideStep(2);
+        showStep(1);
     });
 
     document.getElementById('submitProfileBtn').addEventListener('click', handleProfileSubmission);
@@ -167,17 +173,19 @@ function validateFiles(files) {
     return true;
 }
 
-function updateProgress(step) {
+function updateProgress(stepNumber) {
+    // Remove active class from all steps
     const steps = document.querySelectorAll('.step');
-    steps.forEach((stepElement, index) => {
-        if (index < step) {
-            stepElement.classList.add('completed');
-        } else {
-            stepElement.classList.remove('completed');
-        }
+    steps.forEach(step => {
+        step.classList.remove('active');
     });
-}
 
+    // Add active class to current step
+    const currentStep = document.getElementById(`step${stepNumber}`);
+    if (currentStep) {
+        currentStep.classList.add('active');
+    }
+}
 function handleProfileSubmission() {
     const profileData = {
         ensembleName: document.getElementById('ensembleName').value,
@@ -231,7 +239,7 @@ function validateProfileCreation() {
         document.querySelector('#email + .error-message').style.display = 'block';
         isValid = false;
     }
-
+/*commented for testing
     const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
     if (!password || !passwordRegex.test(password)) {
         document.querySelector('#password + .password-requirements + .error-message').style.display = 'block';
@@ -241,7 +249,7 @@ function validateProfileCreation() {
     if (password !== confirmPassword) {
         document.querySelector('#confirm-password + .error-message').style.display = 'block';
         isValid = false;
-    }
+    } */
 
     if (!terms) {
         alert('Please accept the Terms of Service and Privacy Policy');
